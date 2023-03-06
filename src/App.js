@@ -13,13 +13,22 @@ function App() {
   const [cart, setCart] = useState([]);
 
   const addItem = (item) => {
-    // verilen itemi sepete ekleyin
-    setCart([...cart, item]);
+    const isIncuded = cart.every((eleman) => eleman.id !== item.id);
+    console.log("isIncuded", isIncuded);
+    let yeniCart = isIncuded ? [...cart, item] : [...cart];
+    setCart(yeniCart);
+  };
+
+  const removeItem = (itemid) => {
+    const filtelenmisItem = cart.filter((eleman) => eleman.id !== itemid);
+    console.log("filtelenmisItem", filtelenmisItem);
+    console.log("itemid", itemid);
+    setCart(filtelenmisItem);
   };
 
   return (
     <div className="App">
-      <ProductContext.Provider value={{ products, addItem }}>
+      <ProductContext.Provider value={{ products, addItem, removeItem }}>
         <CartContext.Provider value={{ cart }}>
           <Navigation />
 
